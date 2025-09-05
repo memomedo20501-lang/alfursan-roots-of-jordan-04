@@ -124,22 +124,17 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Enhanced Scroll Indicator with Smooth Transition */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-float">
-        <div className="flex flex-col items-center gap-3 text-primary-foreground/80">
-          <span className="text-sm font-medium">اكتشف المزيد</span>
-          <div className="w-8 h-12 border-2 border-primary-foreground/40 rounded-full flex justify-center 
-                        backdrop-blur-sm bg-primary-foreground/10 hover:bg-primary-foreground/20 
-                        transition-all duration-300 cursor-pointer group"
-               onClick={() => {
-                 const aboutSection = document.getElementById('about');
-                 if (aboutSection) {
-                   aboutSection.scrollIntoView({ behavior: 'smooth' });
-                 }
-               }}>
-            <ArrowDown className="w-4 h-4 mt-2 animate-bounce group-hover:animate-pulse transition-all duration-300" />
-          </div>
-        </div>
+      {/* Simple Centered Text */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <p className="text-primary-foreground/80 text-base font-medium cursor-pointer hover:text-primary-foreground transition-colors duration-300"
+           onClick={() => {
+             const aboutSection = document.getElementById('about');
+             if (aboutSection) {
+               aboutSection.scrollIntoView({ behavior: 'smooth' });
+             }
+           }}>
+          اكتشف المزيد
+        </p>
       </div>
       
       {/* Clean Straight Transition to Next Section */}
