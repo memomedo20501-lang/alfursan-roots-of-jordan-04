@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useCountUp } from "@/hooks/useCountUp";
 import factoryImage from "@/assets/factory-exterior.jpg";
 import productionLineImage from "@/assets/production-line.jpg";
 const About = () => {
@@ -55,16 +56,20 @@ const About = () => {
     description: 'أصبحنا من الرواد في صناعة الجميد الأردني محلياً وإقليمياً'
   }];
   const stats = [{
-    number: '25+',
+    number: 25,
+    suffix: '+',
     label: 'عاماً من الخبرة'
   }, {
-    number: '1000+',
+    number: 1000,
+    suffix: '+',
     label: 'عميل راضي'
   }, {
-    number: '10+',
+    number: 10,
+    suffix: '+',
     label: 'دولة نصدر إليها'
   }, {
-    number: '99%',
+    number: 99,
+    suffix: '%',
     label: 'معدل رضا العملاء'
   }];
   return <div className="min-h-screen bg-background" dir="rtl">
@@ -232,12 +237,28 @@ const About = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {stats.map((stat, index) => <div key={stat.label} className="text-center animate-fade-in-up" style={{
-              animationDelay: `${index * 100}ms`
-            }}>
-                  <div className="text-5xl md:text-6xl font-bold mb-4">{stat.number}</div>
-                  <p className="text-primary-foreground/80 text-lg">{stat.label}</p>
-                </div>)}
+              {stats.map((stat, index) => {
+                const StatCounter = () => {
+                  const { displayValue, ref } = useCountUp({ 
+                    end: stat.number, 
+                    duration: 2000 + (index * 200),
+                    suffix: stat.suffix || ''
+                  });
+                  
+                  return (
+                    <div 
+                      ref={ref}
+                      className="text-center animate-fade-in-up" 
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                      <div className="text-5xl md:text-6xl font-bold mb-4">{displayValue}</div>
+                      <p className="text-primary-foreground/80 text-lg">{stat.label}</p>
+                    </div>
+                  );
+                };
+                
+                return <StatCounter key={stat.label} />;
+              })}
             </div>
           </div>
         </section>

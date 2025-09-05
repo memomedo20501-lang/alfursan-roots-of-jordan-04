@@ -1,24 +1,25 @@
 import { Users, UserCheck, Building2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { useCountUp } from "@/hooks/useCountUp";
 import factoryImage from "@/assets/factory-exterior.jpg";
 
 const AboutUs = () => {
   const stats = [
     {
       icon: Users,
-      number: "150",
+      number: 150,
       label: "موظف",
       color: "text-primary"
     },
     {
       icon: UserCheck,
-      number: "10",
+      number: 10,
       label: "مهندس",
       color: "text-primary"
     },
     {
       icon: Building2,
-      number: "40",
+      number: 40,
       label: "عميل مياومة",
       color: "text-primary"
     }
@@ -73,25 +74,33 @@ const AboutUs = () => {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto">
-          {stats.map((stat, index) => (
-            <Card 
-              key={stat.label} 
-              className="group text-center hover:shadow-xl transition-all duration-500 animate-fade-in border-0 bg-primary shadow-lg hover:shadow-primary/25"
-              style={{ animationDelay: `${index * 150}ms` }}
-            >
-              <CardContent className="p-6 sm:p-8">
-                <div className="w-12 sm:w-16 h-12 sm:h-16 bg-primary-foreground rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <stat.icon className="h-6 sm:h-8 w-6 sm:w-8 text-primary" />
-                </div>
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 text-primary-foreground">
-                  {stat.number}
-                </h3>
-                <p className="text-primary-foreground/80 font-medium text-sm sm:text-base lg:text-lg">
-                  {stat.label}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+          {stats.map((stat, index) => {
+            const StatsCard = () => {
+              const { count, ref } = useCountUp({ end: stat.number, duration: 2000 + (index * 200) });
+              
+              return (
+                <Card 
+                  ref={ref}
+                  className="group text-center hover:shadow-xl transition-all duration-500 animate-fade-in border-0 bg-primary shadow-lg hover:shadow-primary/25"
+                  style={{ animationDelay: `${index * 150}ms` }}
+                >
+                  <CardContent className="p-6 sm:p-8">
+                    <div className="w-12 sm:w-16 h-12 sm:h-16 bg-primary-foreground rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
+                      <stat.icon className="h-6 sm:h-8 w-6 sm:w-8 text-primary" />
+                    </div>
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 text-primary-foreground">
+                      {count}
+                    </h3>
+                    <p className="text-primary-foreground/80 font-medium text-sm sm:text-base lg:text-lg">
+                      {stat.label}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            };
+            
+            return <StatsCard key={stat.label} />;
+          })}
         </div>
       </div>
     </section>
